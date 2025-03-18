@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundVary - AI Music Variations</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">SV</div>
+                <h1>SoundVary</h1>
+            </div>
+            <p class="tagline">Transform your tracks with AI-powered variations</p>
+        </header>
+        
+        <main>
+            <section class="upload-section">
+                <h2>1. Upload Your Track</h2>
+                <div class="file-upload-container">
+                    <div class="file-upload">
+                        <input type="file" accept=".mp3,.wav" id="track-upload">
+                        <label for="track-upload" id="file-label">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 16V8M12 8L9 11M12 8L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span>Choose a file</span>
+                        </label>
+                    </div>
+                    <p class="upload-hint">Supports MP3 or WAV files (max 10MB)</p>
+                </div>
+                
+                <div class="audio-preview" id="original-audio-container" style="display: none;">
+                    <h3>Original Track</h3>
+                    <audio id="original-audio" controls></audio>
+                </div>
+            </section>
+            
+            <section class="options-section">
+                <h2>2. Customize Your Variations</h2>
+                
+                <div class="options-container">
+                    <div class="option-group">
+                        <h3>Elements to Modify</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="drums" checked>
+                                <span class="checkbox-label">Drums</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="bass">
+                                <span class="checkbox-label">Bass</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="melody">
+                                <span class="checkbox-label">Melody</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="harmony">
+                                <span class="checkbox-label">Harmony</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3>Style Direction</h3>
+                        <div class="checkbox-group style-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="electronic" checked>
+                                <span class="checkbox-label">Electronic</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="hip-hop">
+                                <span class="checkbox-label">Hip-Hop</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="rock">
+                                <span class="checkbox-label">Rock</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="jazz">
+                                <span class="checkbox-label">Jazz</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="lo-fi">
+                                <span class="checkbox-label">Lo-Fi</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="cinematic">
+                                <span class="checkbox-label">Cinematic</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="ambient">
+                                <span class="checkbox-label">Ambient</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3>Intensity</h3>
+                        <div class="slider-container">
+                            <input type="range" min="1" max="10" value="5" class="slider" id="intensity-slider">
+                            <div class="slider-labels">
+                                <span>Subtle</span>
+                                <span>Moderate</span>
+                                <span>Dramatic</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h3>Number of Variations</h3>
+                        <div class="number-selector">
+                            <button class="number-btn" data-value="1">1</button>
+                            <button class="number-btn active" data-value="3">3</button>
+                            <button class="number-btn" data-value="5">5</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="generate-btn" class="generate-button" disabled>Generate Variations</button>
+                
+                <div id="error-message" class="error" style="display: none;"></div>
+                <div id="loading-message" style="display: none;">
+                    <p>Generating your variations... This may take 2-4 minutes.</p>
+                    <div class="spinner"></div>
+                </div>
+            </section>
+            
+            <section class="result-section" id="result-section" style="display: none;">
+                <h2>3. Listen & Compare Variations</h2>
+                
+                <div class="variations-container" id="variations-container">
+                    <!-- Variations will be added here dynamically -->
+                </div>
+                
+                <div class="rating-section">
+                    <h3>What's your favorite variation?</h3>
+                    <div class="rating-container" id="rating-container">
+                        <!-- Rating options will be added here dynamically -->
+                    </div>
+                    <button id="finalize-btn" class="finalize-button">Finalize & Download</button>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>SoundVary - AI Music Variation Tool</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
