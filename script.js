@@ -1,5 +1,5 @@
 // Update this with your ngrok URL each time you restart Colab
-const API_URL = 'https://972d-35-221-181-177.ngrok-free.app';
+const API_URL = 'https://1a4b-35-221-181-177.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -160,12 +160,32 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Hide any previous errors and show loading
         errorMessage.style.display = 'none';
+        
+        // Create loading message with time tracking
+        let startTime = Date.now();
+        let elapsedSeconds = 0;
         loadingMessage.innerHTML = `
             <p>Generating ${count} variations with ${elements.join(', ')} in ${styles[0]} style...</p>
-            <p>This may take 1-2 minutes.</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="generation-progress"></div>
+            </div>
+            <p id="time-indicator">Time elapsed: 0s (typically takes 30-60s)</p>
             <div class="spinner"></div>
         `;
         loadingMessage.style.display = 'block';
+        
+        // Start progress timer
+        const progressBar = document.getElementById('generation-progress');
+        const timeIndicator = document.getElementById('time-indicator');
+        const progressTimer = setInterval(() => {
+            elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+            timeIndicator.textContent = `Time elapsed: ${elapsedSeconds}s (typically takes 30-60s)`;
+            
+            // Update progress bar (approximate)
+            const estimatedProgress = Math.min(elapsedSeconds / 60 * 100, 95); // Max at 95%
+            progressBar.style.width = estimatedProgress + '%';
+        }, 1000);
+        
         generateBtn.disabled = true;
         resultSection.style.display = 'none';
         
@@ -208,7 +228,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 if (!response.ok) {
-                    throw new Error(`Server error for variation ${i+1}`);
+                    const errorText = await response.text();
+                    console.error('Server response:', errorText);
+                    try {
+                        const errorJson = JSON.parse(errorText);
+                        throw new Error(errorJson.error || `Server error for variation ${i+1}: ${response.status}`);
+                    } catch (jsonError) {
+                        throw new Error(`Server error for variation ${i+1}: ${response.status} - ${errorText.substring(0, 100)}...`);
+                    }
                 }
                 
                 const data = await response.json();
@@ -245,6 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showError(`Error: ${err.message}`);
             console.error(err);
         } finally {
+            // Clear the progress timer
+            clearInterval(progressTimer);
             loadingMessage.style.display = 'none';
             generateBtn.disabled = false;
         }
