@@ -17,6 +17,26 @@
     --error-color: #FF4D4F;
 }
 
+[data-theme="dark"] {
+    --primary-color: #3245FF;
+    --primary-light: rgba(50, 69, 255, 0.2);
+    --secondary-color: #00c2ff;
+    --tertiary-color: #FFBB33;
+    --background-color: #121212;
+    --surface-color: #1e1e1e;
+    --text-color: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --border-color: #2d3748;
+    --success-color: #0DD88B;
+    --warning-color: #FFD166;
+    --error-color: #FF6B6B;
+}
+
+/* Apply transitions for theme switching */
+html {
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
@@ -26,6 +46,7 @@ body {
     background-color: var(--background-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .container {
@@ -36,16 +57,23 @@ body {
 
 /* Modern header */
 header {
-    text-align: center;
     margin-bottom: 48px;
     padding-bottom: 24px;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 16px;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
 }
 
 .logo {
@@ -61,6 +89,32 @@ header {
     margin-right: 16px;
     font-size: 20px;
     box-shadow: 0 4px 14px rgba(50, 69, 255, 0.25);
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 0;
+}
+
+#theme-toggle-btn {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#theme-toggle-btn:hover {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -187,6 +241,10 @@ section:nth-child(3) h2::before {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
+}
+
+.option-group.full-width {
+    grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {

@@ -10,9 +10,26 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo-container">
-                <div class="logo">SV</div>
-                <h1>SoundVary</h1>
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">SV</div>
+                    <h1>SoundVary</h1>
+                </div>
+                <div class="theme-toggle">
+                    <button id="theme-toggle-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.34 17.66L4.93 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <p class="tagline">Transform your tracks with AI-powered variations</p>
         </header>
@@ -44,7 +61,57 @@
                 <h2>Customize Your Variations</h2>
                 
                 <div class="options-container">
-                    <div class="option-group">
+                    <div class="option-group full-width">
+                        <h3>Style Direction</h3>
+                        <div class="checkbox-group style-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="electronic" checked>
+                                <span class="checkbox-label">Electronic</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="hip-hop">
+                                <span class="checkbox-label">Hip-Hop</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="rock">
+                                <span class="checkbox-label">Rock</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="jazz">
+                                <span class="checkbox-label">Jazz</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="lo-fi">
+                                <span class="checkbox-label">Lo-Fi</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="cinematic">
+                                <span class="checkbox-label">Cinematic</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="ambient">
+                                <span class="checkbox-label">Ambient</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="classical">
+                                <span class="checkbox-label">Classical</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="edm">
+                                <span class="checkbox-label">EDM</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="pop">
+                                <span class="checkbox-label">Pop</span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" value="rb">
+                                <span class="checkbox-label">R&B</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group full-width">
                         <h3>Elements to Modify</h3>
                         <div id="elements-container">
                             <div class="element-controls" data-element="drums">
@@ -118,40 +185,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="option-group">
-                        <h3>Style Direction</h3>
-                        <div class="checkbox-group style-options">
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="electronic" checked>
-                                <span class="checkbox-label">Electronic</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="hip-hop">
-                                <span class="checkbox-label">Hip-Hop</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="rock">
-                                <span class="checkbox-label">Rock</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="jazz">
-                                <span class="checkbox-label">Jazz</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="lo-fi">
-                                <span class="checkbox-label">Lo-Fi</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="cinematic">
-                                <span class="checkbox-label">Cinematic</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="ambient">
-                                <span class="checkbox-label">Ambient</span>
-                            </label>
                         </div>
                     </div>
                     

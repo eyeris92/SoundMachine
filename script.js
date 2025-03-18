@@ -1,6 +1,5 @@
 // Update this with your ngrok URL each time you restart Colab
-// This is a placeholder URL - replace it with the URL provided by your Colab notebook
-const API_URL = 'https://your-ngrok-url-here.ngrok-free.app';
+const API_URL = 'https://e7d4-35-221-181-177.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -18,10 +17,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const ratingContainer = document.getElementById('rating-container');
     const elementIntensitySliders = document.querySelectorAll('.element-intensity');
     const elementCheckboxes = document.querySelectorAll('.element-checkbox');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
     
     let uploadedFile = null;
     let variations = [];
     let selectedVariation = null;
+    
+    // Theme toggle functionality
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
+    
+    // Check for saved theme preference or default to 'light'
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    
+    // Add event listener to theme toggle button
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    });
     
     // Set up element checkbox handlers
     elementCheckboxes.forEach(checkbox => {
@@ -143,6 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Hide any previous errors and show loading
         errorMessage.style.display = 'none';
+        loadingMessage.innerHTML = `
+            <p>Generating ${count} variations with ${elements.join(', ')} in ${styles[0]} style...</p>
+            <p>This may take 1-2 minutes.</p>
+            <div class="spinner"></div>
+        `;
         loadingMessage.style.display = 'block';
         generateBtn.disabled = true;
         resultSection.style.display = 'none';
@@ -290,9 +312,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to download a variation
     function downloadVariation(variation) {
         const fileName = uploadedFile.name.split('.')[0];
-        const element = variation.config.element;
+        const elements = variation.config.elements.join('_');
         const style = variation.config.style;
-        const downloadName = `${fileName}_${element}_${style}_variation.wav`;
+        const downloadName = `${fileName}_${style}_${elements}_variation.wav`;
         
         const a = document.createElement('a');
         a.href = URL.createObjectURL(variation.blob);
