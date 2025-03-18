@@ -283,10 +283,46 @@ section:nth-child(3) h2::before {
     transition: all 0.2s ease;
 }
 
+/* Dark mode text color fix for white buttons */
 [data-theme="dark"] .checkbox-container {
     background: #2d3748;
     color: #e2e8f0;
     border-color: #4a5568;
+}
+
+/* Force dark text on light backgrounds even in dark mode */
+[data-theme="dark"] .element-controls {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .checkbox-container:not(:has(input:checked)) {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+/* Style selection pills - fix contrast in dark mode */
+.style-options .checkbox-container {
+    background: white;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .style-options .checkbox-container {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+.style-options .checkbox-container:has(input:checked) {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .style-options .checkbox-container:has(input:checked) {
+    background: rgba(50, 69, 255, 0.3);
+    color: white;
+    border-color: var(--primary-color);
 }
 
 .checkbox-container input {
@@ -333,9 +369,22 @@ section:nth-child(3) h2::before {
     transition: all 0.3s ease;
 }
 
+/* Better dark mode text contrast */
+[data-theme="dark"] .subtle,
+[data-theme="dark"] .moderate,
+[data-theme="dark"] .dramatic {
+    color: #a0aec0;
+}
+
+/* Special rule for white-background cards in dark mode */
 [data-theme="dark"] .element-controls {
     background-color: #2d3748;
     border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .element-name {
+    color: #e2e8f0;
 }
 
 .element-controls.disabled {
@@ -417,6 +466,15 @@ section:nth-child(3) h2::before {
     color: var(--text-secondary);
 }
 
+[data-theme="dark"] .slider-labels {
+    color: #a0aec0;
+}
+
+/* Make slider labels more visible in dark mode */
+[data-theme="dark"] .element-controls .slider-labels span {
+    color: #cbd5e0;
+}
+
 .number-selector {
     display: flex;
     gap: 12px;
@@ -429,10 +487,17 @@ section:nth-child(3) h2::before {
     border-radius: 12px;
     border: 1px solid var(--border-color);
     background: white;
+    color: var(--text-color);
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .number-btn {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
 }
 
 .number-btn:hover {
