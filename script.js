@@ -1,5 +1,6 @@
 // Update this with your ngrok URL each time you restart Colab
-const API_URL = 'https://593a-35-221-181-177.ngrok-free.app';
+// This is a placeholder URL - replace it with the URL provided by your Colab notebook
+const API_URL = 'https://your-ngrok-url-here.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -15,11 +16,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultSection = document.getElementById('result-section');
     const variationsContainer = document.getElementById('variations-container');
     const ratingContainer = document.getElementById('rating-container');
-    const intensitySlider = document.getElementById('intensity-slider');
+    const elementIntensitySliders = document.querySelectorAll('.element-intensity');
+    const elementCheckboxes = document.querySelectorAll('.element-checkbox');
     
     let uploadedFile = null;
     let variations = [];
     let selectedVariation = null;
+    
+    // Set up element checkbox handlers
+    elementCheckboxes.forEach(checkbox => {
+        // Initialize the element controls visibility based on checkbox state
+        const elementControls = checkbox.closest('.element-controls');
+        const slider = elementControls.querySelector('.element-intensity');
+        
+        if (!checkbox.checked) {
+            slider.disabled = true;
+            elementControls.classList.add('disabled');
+        }
+        
+        // Add event listener for changes
+        checkbox.addEventListener('change', function() {
+            const elementControls = this.closest('.element-controls');
+            const slider = elementControls.querySelector('.element-intensity');
+            
+            if (this.checked) {
+                slider.disabled = false;
+                elementControls.classList.remove('disabled');
+            } else {
+                slider.disabled = true;
+                elementControls.classList.add('disabled');
+            }
+            
+            // Enable generate button if at least one element is selected
+            if (uploadedFile) {
+                const anyElementSelected = document.querySelector('.element-checkbox:checked');
+                generateBtn.disabled = !anyElementSelected;
+            }
+        });
+    });
     
     // Set up number buttons
     const numberBtns = document.querySelectorAll('.number-btn');
@@ -44,8 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
             originalAudio.src = objectUrl;
             originalAudioContainer.style.display = 'block';
             
-            // Enable generate button
-            generateBtn.disabled = false;
+            // Enable generate button only if at least one element is selected
+            const anyElementSelected = document.querySelector('.element-checkbox:checked');
+            generateBtn.disabled = !anyElementSelected;
         }
     });
     
@@ -56,17 +91,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Get selected elements to modify
-        const elements = Array.from(document.querySelectorAll('.option-group:nth-child(1) input:checked'))
-            .map(input => input.value);
+        // Get selected elements and their intensity values
+        const elements = [];
+        const elementIntensities = {};
+        
+        // Get all element checkboxes
+        const elementControlsAll = document.querySelectorAll('.element-controls');
+        
+        elementControlsAll.forEach(control => {
+            const element = control.dataset.element;
+            const isChecked = control.querySelector('input[type="checkbox"]').checked;
+            const intensity = control.querySelector('.element-intensity').value;
             
+            if (isChecked) {
+                elements.push(element);
+                elementIntensities[element] = parseInt(intensity);
+            }
+        });
+        
         if (elements.length === 0) {
             showError('Please select at least one element to modify');
             return;
         }
         
         // Get selected styles
-        const styles = Array.from(document.querySelectorAll('.option-group:nth-child(2) input:checked'))
+        const styles = Array.from(document.querySelectorAll('.style-options input:checked'))
             .map(input => input.value);
             
         if (styles.length === 0) {
@@ -74,11 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Get intensity value
-        const intensity = intensitySlider.value;
-        
         // Generate the variations
-        generateVariations(uploadedFile, elements, styles, intensity, numberOfVariations);
+        generateVariations(uploadedFile, elements, styles, elementIntensities, numberOfVariations);
     });
     
     // Handle finalize button click
@@ -91,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Function to generate variations
-    async function generateVariations(file, elements, styles, intensity, count) {
+    async function generateVariations(file, elements, styles, elementIntensities, count) {
         // Reset previous results
         variations = [];
         
@@ -106,22 +152,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const generatedVariations = [];
             
             for (let i = 0; i < count; i++) {
-                // Pick a random element and style for variety
-                const element = elements[Math.floor(Math.random() * elements.length)];
+                // For each variation, we'll use multiple elements with their specific intensities
+                // Pick a different style for each variation
                 const style = styles[Math.floor(Math.random() * styles.length)];
+                
+                // For each variation, randomly select 1-3 elements to modify
+                const elementsToUse = [...elements];
+                const shuffledElements = elementsToUse.sort(() => 0.5 - Math.random());
+                const selectedElements = shuffledElements.slice(0, Math.min(Math.ceil(Math.random() * 3), elements.length));
                 
                 // Create a unique configuration
                 const config = {
-                    element,
+                    elements: selectedElements,
                     style,
-                    intensity: parseInt(intensity) + (Math.random() * 2 - 1) // Add some randomness
+                    elementIntensities: {}
                 };
+                
+                // Apply the intensity for each selected element (with slight randomness)
+                selectedElements.forEach(elem => {
+                    config.elementIntensities[elem] = elementIntensities[elem] + (Math.random() * 1 - 0.5); // Add slight randomness
+                });
                 
                 // Generate the variation
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('element', config.element);
                 formData.append('style', config.style);
+                formData.append('elements', JSON.stringify(config.elements));
+                formData.append('elementIntensities', JSON.stringify(config.elementIntensities));
                 
                 const response = await fetch(`${API_URL}/generate`, {
                     method: 'POST',
@@ -186,9 +243,12 @@ document.addEventListener('DOMContentLoaded', function() {
             card.innerHTML = `
                 <h3 class="variation-title">Variation ${variation.id + 1}</h3>
                 <div class="variation-details">
-                    <div>Element: ${variation.config.element}</div>
-                    <div>Style: ${variation.config.style}</div>
-                    <div>Intensity: ${Math.round(variation.config.intensity)}/10</div>
+                <div>Style: ${variation.config.style}</div>
+                <div>Modified elements:</div>
+                ${variation.config.elements.map(elem => {
+                        const intensity = Math.round(variation.config.elementIntensities[elem]);
+                        return `<div class="element-detail">${elem.charAt(0).toUpperCase() + elem.slice(1)}: <span class="intensity-badge intensity-${intensity <= 3 ? 'low' : intensity <= 7 ? 'medium' : 'high'}">${intensity}/10</span></div>`;
+                    }).join('')}
                 </div>
                 <audio controls src="${variation.audioUrl}"></audio>
             `;

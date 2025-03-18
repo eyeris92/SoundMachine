@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoundVary - AI Music Variations</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -18,7 +19,7 @@
         
         <main>
             <section class="upload-section">
-                <h2>1. Upload Your Track</h2>
+                <h2>Upload Your Track</h2>
                 <div class="file-upload-container">
                     <div class="file-upload">
                         <input type="file" accept=".mp3,.wav" id="track-upload">
@@ -40,28 +41,83 @@
             </section>
             
             <section class="options-section">
-                <h2>2. Customize Your Variations</h2>
+                <h2>Customize Your Variations</h2>
                 
                 <div class="options-container">
                     <div class="option-group">
                         <h3>Elements to Modify</h3>
-                        <div class="checkbox-group">
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="drums" checked>
-                                <span class="checkbox-label">Drums</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="bass">
-                                <span class="checkbox-label">Bass</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="melody">
-                                <span class="checkbox-label">Melody</span>
-                            </label>
-                            <label class="checkbox-container">
-                                <input type="checkbox" value="harmony">
-                                <span class="checkbox-label">Harmony</span>
-                            </label>
+                        <div id="elements-container">
+                            <div class="element-controls" data-element="drums">
+                                <div class="element-controls-header">
+                                    <div class="element-name">Drums</div>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" value="drums" checked class="element-checkbox">
+                                        <span class="checkbox-label">Include</span>
+                                    </label>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider element-intensity" data-element="drums">
+                                    <div class="slider-labels">
+                                        <span>Subtle</span>
+                                        <span>Moderate</span>
+                                        <span>Dramatic</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="element-controls" data-element="bass">
+                                <div class="element-controls-header">
+                                    <div class="element-name">Bass</div>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" value="bass" class="element-checkbox">
+                                        <span class="checkbox-label">Include</span>
+                                    </label>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider element-intensity" data-element="bass">
+                                    <div class="slider-labels">
+                                        <span>Subtle</span>
+                                        <span>Moderate</span>
+                                        <span>Dramatic</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="element-controls" data-element="melody">
+                                <div class="element-controls-header">
+                                    <div class="element-name">Melody</div>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" value="melody" class="element-checkbox">
+                                        <span class="checkbox-label">Include</span>
+                                    </label>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider element-intensity" data-element="melody">
+                                    <div class="slider-labels">
+                                        <span>Subtle</span>
+                                        <span>Moderate</span>
+                                        <span>Dramatic</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="element-controls" data-element="harmony">
+                                <div class="element-controls-header">
+                                    <div class="element-name">Harmony</div>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" value="harmony" class="element-checkbox">
+                                        <span class="checkbox-label">Include</span>
+                                    </label>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider element-intensity" data-element="harmony">
+                                    <div class="slider-labels">
+                                        <span>Subtle</span>
+                                        <span>Moderate</span>
+                                        <span>Dramatic</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -100,18 +156,6 @@
                     </div>
                     
                     <div class="option-group">
-                        <h3>Intensity</h3>
-                        <div class="slider-container">
-                            <input type="range" min="1" max="10" value="5" class="slider" id="intensity-slider">
-                            <div class="slider-labels">
-                                <span>Subtle</span>
-                                <span>Moderate</span>
-                                <span>Dramatic</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="option-group">
                         <h3>Number of Variations</h3>
                         <div class="number-selector">
                             <button class="number-btn" data-value="1">1</button>
@@ -131,7 +175,7 @@
             </section>
             
             <section class="result-section" id="result-section" style="display: none;">
-                <h2>3. Listen & Compare Variations</h2>
+                <h2>Listen & Compare Variations</h2>
                 
                 <div class="variations-container" id="variations-container">
                     <!-- Variations will be added here dynamically -->
