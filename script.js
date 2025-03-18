@@ -1,5 +1,5 @@
 // Update this with your ngrok URL each time you restart Colab
-const API_URL = 'https://e7d4-35-221-181-177.ngrok-free.app';
+const API_URL = 'https://9464-35-221-181-177.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
