@@ -1,5 +1,5 @@
 // Update this with your ngrok URL each time you restart Colab
-const API_URL = 'https://407f-35-221-181-177.ngrok-free.app';
+const API_URL = 'https://161d-35-221-181-177.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -372,11 +372,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if API is available on load
     fetch(`${API_URL}/health`)
         .then(response => {
+            console.log('Health check response:', response);
             if (!response.ok) {
                 showError('API server is not responding. Please contact the administrator.');
             }
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Health check error:', error);
             showError('Cannot connect to the AI service. Please try again later.');
         });
 });
