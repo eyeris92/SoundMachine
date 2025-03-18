@@ -271,6 +271,7 @@ section:nth-child(3) h2::before {
     margin-top: 16px;
 }
 
+/* Improved checkbox styles with better contrast for dark mode */
 .checkbox-container {
     display: inline-flex;
     align-items: center;
@@ -280,6 +281,12 @@ section:nth-child(3) h2::before {
     padding: 8px 16px;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .checkbox-container {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
 }
 
 .checkbox-container input {
@@ -295,6 +302,16 @@ section:nth-child(3) h2::before {
 .checkbox-container:has(input:checked) {
     background: var(--primary-light);
     border: 1px solid var(--primary-color);
+}
+
+[data-theme="dark"] .checkbox-container:has(input:checked) {
+    background: rgba(50, 69, 255, 0.3);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+[data-theme="dark"] .checkbox-container input:checked + .checkbox-label {
+    color: white;
 }
 
 .checkbox-label {
@@ -316,9 +333,19 @@ section:nth-child(3) h2::before {
     transition: all 0.3s ease;
 }
 
+[data-theme="dark"] .element-controls {
+    background-color: #2d3748;
+    border-color: #4a5568;
+}
+
 .element-controls.disabled {
     opacity: 0.6;
     background-color: var(--surface-color);
+}
+
+[data-theme="dark"] .element-controls.disabled {
+    opacity: 0.5;
+    background-color: #1a202c;
 }
 
 .element-controls-header {
@@ -326,6 +353,31 @@ section:nth-child(3) h2::before {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+}
+
+/* Improve the Include button in dark mode */
+.element-controls-header .checkbox-container {
+    padding: 5px 12px;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.element-controls-header .checkbox-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .element-controls-header .checkbox-container {
+    background-color: rgba(50, 69, 255, 0.2);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .element-controls-header .checkbox-container:has(input:checked) {
+    background-color: rgba(50, 69, 255, 0.4);
+    color: white;
 }
 
 .element-name {
@@ -460,6 +512,26 @@ audio {
     border-radius: 12px;
     font-weight: 500;
     border: 1px solid rgba(255, 77, 79, 0.2);
+}
+
+[data-theme="dark"] .error {
+    background-color: rgba(255, 77, 79, 0.15);
+    border-color: rgba(255, 77, 79, 0.3);
+}
+
+/* Loading message container styles */
+#loading-message {
+    background-color: rgba(50, 69, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+[data-theme="dark"] #loading-message {
+    background-color: rgba(50, 69, 255, 0.2);
+    color: white;
 }
 
 /* Modern variations display */
