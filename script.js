@@ -1,5 +1,5 @@
 // Update this with your ngrok URL each time you restart Colab
-const API_URL = 'https://bfa7-35-221-181-177.ngrok-free.app';
+const API_URL = 'https://0a7a-34-75-86-130.ngrok-free.app';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -165,7 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let startTime = Date.now();
         let elapsedSeconds = 0;
         loadingMessage.innerHTML = `
-            <p>Generating ${count} variations with ${elements.join(', ')} in ${styles[0]} style...</p>
+            <p>Processing your track - this involves several steps:</p>
+            <ol>
+                <li>Separating your track into stems (drums, bass, melody, harmony)</li>
+                <li>Applying ${styles[0]} style to ${elements.join(', ')}</li>
+                <li>Remixing the track</li>
+            </ol>
             <div class="progress-container">
                 <div class="progress-bar" id="generation-progress"></div>
             </div>
